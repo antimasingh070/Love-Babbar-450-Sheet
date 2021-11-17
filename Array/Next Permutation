@@ -1,0 +1,22 @@
+class Solution {
+public:
+    void nextPermutation(vector<int>& nums) {
+        auto first=nums.begin();
+        auto last=nums.end();
+        auto rfirst=reverse_iterator<std::vector<int>::iterator>(last);
+        auto rlast=reverse_iterator<std::vector<int>::iterator>(first);
+
+        auto pivot=next(rfirst);
+
+        while(pivot!=rlast && *pivot>=*prev(pivot)) ++pivot;
+
+        if(pivot==rlast){
+            reverse(rfirst,rlast);
+        }else{
+            auto change=find_if(rfirst,pivot,bind1st(less<int>(),*pivot));
+
+        swap(*change,*pivot);
+        reverse(rfirst,pivot);
+        }
+    }
+};
